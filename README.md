@@ -1,15 +1,19 @@
 # testing_game_linux
+
 Junko's 3rd non-spell written in C++
-##How to Play
+
+## How to Play
+
 Kill Junko while dodging all bullets to win. Player starts with 3 lives.
 
-##Controls
-*z - shoot
-*arrow keys - move
-*lshift/rshift - toggles hitbox
-*lshift/rshift - toggles hitbox and slows movement
+## Controls
 
-##Usage
+* z - shoot
+* arrow keys - move
+* lshift/rshift - toggles hitbox
+* lshift/rshift - toggles hitbox and slows movement
+
+## Usage
 
 Clone or download repository
 It is required to have SDL2 installed in a Linux environment

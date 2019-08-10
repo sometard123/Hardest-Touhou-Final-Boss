@@ -7,25 +7,33 @@
 #define WINX 450
 #define WINY 480
 using namespace std;
+
+//contructor initializes position and hitbox position
 reimu::reimu()
 {
   x = 320;
   y = 240;
   h.x = x + 29;
   h.y = y + 29;
-  health = 2000.0;
 }
 
+reimu::~reimu()
+{
+}
+
+//sets reimu's alive status
 void reimu::setIsAlive(bool alive)
 {
   isAlive = alive;
 }
 
+//returns whether reimu is alive or dead
 bool reimu::getIsAlive()
 {
   return isAlive;
 }
 
+//returns reimu and reimu's hitboxes position
 double reimu::getX()
 {
   return x;
@@ -46,10 +54,11 @@ double reimu::getHitboxY()
   return h.y;
 }
 
+//updates reimu's position
 void reimu::update()
 {
   state = SDL_GetKeyboardState(NULL);
-  if (state[SDL_SCANCODE_LSHIFT] || state[SDL_SCANCODE_RSHIFT])
+  if (state[SDL_SCANCODE_LSHIFT] || state[SDL_SCANCODE_RSHIFT]) //speed slowed when shift is pressed
   {
     velocity = 1.5;
     diagonalVelocity = sqrt(pow(velocity,2) / 2.0);
@@ -165,8 +174,10 @@ void reimu::update()
   }
 }
 
+//collision detection with walls
 void reimu::collisionDetection()
 {
+  //reimu's position slightly bounces back when she hits a wall
   if (x + 64 > WINX)
   {
     x = WINX - 64;
@@ -192,12 +203,11 @@ void reimu::collisionDetection()
 void reimu::draw(SDL_Renderer *renderer, SDL_Texture *texture)
 {
   collisionDetection();
-//  update();
   SDL_Rect reimuRect = {(int)x, (int)y, 64, 64};
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderCopy(renderer, texture, NULL, &reimuRect);
   state = SDL_GetKeyboardState(NULL);
-  if (state[SDL_SCANCODE_LSHIFT] || state[SDL_SCANCODE_RSHIFT])
+  if (state[SDL_SCANCODE_LSHIFT] || state[SDL_SCANCODE_RSHIFT]) //displays hitbox when shift is pressed
   {
     SDL_Rect hitboxRect = {(int)h.x, (int)h.y, 6, 6};
     SDL_RenderFillRect(renderer, &hitboxRect);

@@ -1,5 +1,15 @@
 #include <star.h>
 #include <iostream>
+
+star::star()
+{
+}
+
+star::~star()
+{
+}
+
+//sets position of star
 void star::setPosition(int x, int y)
 {
   this->xcoord = x;

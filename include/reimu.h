@@ -5,13 +5,22 @@
 class reimu
 {
   public:
+    //constructor/deconstructor
+
     reimu();
+    ~reimu();
+    //setters
+
     void setIsAlive(bool alive);
+    //getters
+
     bool getIsAlive();
     double getX();
     double getY();
     double getHitboxX();
     double getHitboxY();
+    //misc
+
     void update();
     void draw(SDL_Renderer *renderer, SDL_Texture *texture);
     void collisionDetection();
@@ -27,6 +36,5 @@ class reimu
     double y;
     double velocity;
     double diagonalVelocity;
-    double health;
     bool isAlive;
 };

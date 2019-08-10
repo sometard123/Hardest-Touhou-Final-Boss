@@ -5,14 +5,21 @@
 class gameloop
 {
   public:
+    //constructor/deconstructor
+
     gameloop();
     ~gameloop();
+    //setters
+
     void setFrameCount(int frameCnt);
+    //getters
+
     int getLastFrame();
     int getFrameCount();
+    //misc
+
     void loop();
   private:
-    Mix_Chunk *effect; 
     int frameCount;
     int lastFrame;
 };

@@ -1,15 +1,21 @@
 #pragma once
 #include <SDL2/SDL.h>
-class enemy
+class enemybullet
 {
   public:
-    enemy(double xcoord, double ycoord, double deltax, double deltay);
+    //constructor/deconstructor
+
+    enemybullet(double xcoord, double ycoord, double deltax, double deltay);
+    ~enemybullet();
+    //getters
+
     double getX();
     double getY();
+    //misc
+
     void updatePosition();
     void draw(SDL_Renderer *renderer);
   private:
-    double health;
     double x;
     double y;
     double dx;

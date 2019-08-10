@@ -4,6 +4,8 @@
 class TextureManager
 {
   public:
-  static SDL_Texture *loadTex(const char* fileName, SDL_Renderer *renderer);
-  static SDL_Texture *loadTex(const char* file, const char* text, SDL_Renderer *renderer, TTF_Font **font);
+    //load textures
+    static SDL_Texture *loadTex(const char* fileName, SDL_Renderer *renderer);
+    static SDL_Texture *loadTex(const char* file, const char* text, SDL_Renderer *renderer, TTF_Font **font);
+  private:
 };

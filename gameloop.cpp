@@ -14,98 +14,104 @@ gameloop::~gameloop()
 {
 }
 
+//sets frame count
 void gameloop::setFrameCount(int frameCnt)
 {
   frameCount = frameCnt;
 }
 
+//gets the last frame passed
 int gameloop::getLastFrame()
 {
   return lastFrame;
 }
 
+//gets the frame count
 int gameloop::getFrameCount()
 {
- return frameCount;
+  return frameCount;
 }
 
+//game loop
 void gameloop::loop()
 {
-  game.initWindow(&effect);
-  game.setLives(3);
+  game.initWindow();
+  game.setLives(3); //player has 3 lives
   game.initStars();
   game.initHealthBar();
-  while (game.getRunning()) 
+  while (game.getRunning()) //while game is running 
   {
     game.processEvents();
     if (game.getLoading())
     {
-      if (game.timer() > 100)
+      if (game.timer() > 100) //loading phase only lasts for a brief moment
       {
         game.setLoading(false);
         game.setGame(true);
-        game.setTime(0);
+        game.setTime(0); //timer resets to 0 for later use
       }
     }
     else if (game.getGame())
     {
-      if (!game.getReimuState())
+      if (!game.getReimuState()) //if reimu's dead
       {
-        if (game.timer() > 50)
+        if (game.timer() > 50) //pauses for duraction of 50
         {
-          game.clearEnemy(&effect);
+          game.clearEnemyBullet();
           game.clearBullet();
-          game.setTime(0);
+          game.setTime(0); //timer resets for later use
         }
       }
       else
       {
-        static int i = 0;
+        static int i = 0; //ring counter
         if (game.getClear())
         {
           if (game.timer() > 10  && i < game.getRings())
           {
-            game.setJunkoMovement(false);
-            game.genEnemy(i);
+            game.setJunkoMovement(false); //junko doesn't move when bullets are firing
+            game.initEnemyBullet(i);
             game.setTime(0);
             i++;
             if (i == game.getRings())
             {
               i = 0;
-              game.setJunkoMovement(true);
+              game.setJunkoMovement(true); //junko moves when all rings are fired
             }
           }
         } 
-        game.updateEnemy();
-        game.clearBullet();
-        game.clearEnemy(&effect);
+        game.update(); //updates position of everything
+        //clears bullets if necessary
+        game.clearBullet(); 
+        game.clearEnemyBullet();
       }
     }
-    else if (game.getGameOver())
+    else if (game.getGameOver()) //gamer wins
     {
       if (game.timer() > 100)
       {
         game.setRunning(false);
       }
     }
-    else
+    else //if player wins
     {
       if (game.timer() > 100)
       {
         game.setRunning(false);
       }
     }
-    lastFrame = SDL_GetTicks();
-    static int lastTime = 0;
-    if (lastFrame >= lastTime + 1000)
-    {
+    //frame rate stuff
+    /*lastFrame = SDL_GetTicks();
+      static int lastTime = 0;
+      if (lastFrame >= lastTime + 1000)
+      {
       lastTime = lastFrame;
       frameCount = 0;
-    }
-    game.render();
+      }*/
     SDL_Delay(16);
+    game.render();
   }
-  game.quit(&effect);
+  game.quit();
 }
 
 

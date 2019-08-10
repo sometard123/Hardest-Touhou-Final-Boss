@@ -8,8 +8,6 @@ OUTPUT = test
 
 test: game
 	./test
-all: main.cpp
-	$(CC) main.cpp gameloop.cpp gamelogic.cpp reimu.cpp bullet.cpp enemybullet.cpp texturemanager.cpp star.cpp junko.cpp healthbar.cpp $(INCLUDE) $(LIB) $(LINKERS) $(CFLAGS) $(OUTPUT) 
 gdb: game
 	gdb $(OUTPUT) 
 debug: game

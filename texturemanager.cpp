@@ -2,11 +2,9 @@
 #include <iostream>
 #include <cstdlib>
 using namespace std;
-SDL_Texture *TextureManager::loadTex(const char* file, SDL_Renderer *renderer)
-{
+SDL_Texture *TextureManager::loadTex(const char* file, SDL_Renderer *renderer) {
   SDL_Surface *tmp = IMG_Load(file); //loads image into surface
-  if (tmp == NULL) //if image fails to load
-  {
+  if (tmp == NULL) {
     cout << file << "was not found!" << endl;
     exit(EXIT_FAILURE);
   }
@@ -19,8 +17,7 @@ SDL_Texture *TextureManager::loadTex(const char* file, const char* text, SDL_Ren
 {
   SDL_Color color = {255, 255, 255, 255};
   *font = TTF_OpenFont(file, 16); //opens font file and loads it into the font variable
-  if (font == NULL)
-  {
+  if (font == NULL) {
     cout << file << " was not found!" << endl;
     exit(EXIT_FAILURE);
   }

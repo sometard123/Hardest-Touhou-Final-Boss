@@ -2,8 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdbool.h>
-class reimu
-{
+class reimu {
   public:
     //constructor/deconstructor
 

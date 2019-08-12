@@ -1,8 +1,7 @@
 #pragma once
 #include <gameloop.h>
 #include <SDL2/SDL_ttf.h>
-class TextureManager
-{
+class TextureManager {
   public:
     //load textures
     static SDL_Texture *loadTex(const char* fileName, SDL_Renderer *renderer);

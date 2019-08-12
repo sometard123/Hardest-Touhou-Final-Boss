@@ -1,7 +1,6 @@
 #pragma once
 #include <bomb.h>
-class reimubomb: public bomb
-{
+class reimubomb: public bomb {
   public:
     reimubomb(reimu *);
     virtual ~reimubomb();

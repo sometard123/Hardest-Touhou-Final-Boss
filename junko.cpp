@@ -3,44 +3,37 @@
 using namespace std;
 
 //constructor initiates position and health
-junko::junko()
-{
+junko::junko() {
   x = 330;
   y = 100;
   health = 2870;
 }
 
-junko::~junko()
-{
+junko::~junko() {
 }
 
 //returns junko's xcoordinate
-int junko::getX()
-{
+int junko::getX() {
   return x;
 }
 
 //returns junko's y coordinate
-int junko::getY()
-{
+int junko::getY() {
   return y;
 }
 
 //updates x position with given velocity
-void junko::updateX(double dx)
-{
+void junko::updateX(double dx) {
   x += dx;
 }
 
 //updates health
-int junko::updateHp()
-{
+int junko::updateHp() {
   return --health;
 }
   
 //draws junko
-void junko::draw(SDL_Renderer *renderer, SDL_Texture *texture)
-{
+void junko::draw(SDL_Renderer *renderer, SDL_Texture *texture) {
   int w;
   int h;
   SDL_QueryTexture(texture, NULL, NULL, &w, &h); //gets width and height from texture

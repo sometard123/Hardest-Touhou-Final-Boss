@@ -1,7 +1,6 @@
 #pragma once
 #include <gamelogic.h>
-class healthbar
-{
+class healthbar {
   public:
     //constructor and deconstructor
 

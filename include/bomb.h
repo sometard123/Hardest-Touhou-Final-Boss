@@ -1,7 +1,6 @@
 #pragma once
 #include <gamelogic.h>
-class bomb
-{
+class bomb {
   public:
     bomb();
     virtual ~bomb();

@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
-class bullet
-{
+class bullet {
   public:
     //constructor/deconstructor
 

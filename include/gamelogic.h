@@ -5,8 +5,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 #include <reimu.h>
-class gamelogic
-{
+class gamelogic {
   public:
     //constructor/deconstructor
     gamelogic();

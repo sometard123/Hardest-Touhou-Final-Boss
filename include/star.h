@@ -1,7 +1,6 @@
 #pragma once
 #include <gamelogic.h>
-class star
-{
+class star {
   public:
     //constructor/deconstructor
 

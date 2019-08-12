@@ -2,8 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-class gameloop
-{
+class gameloop {
   public:
     //constructor/deconstructor
 

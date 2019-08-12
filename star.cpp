@@ -1,23 +1,19 @@
 #include <star.h>
 #include <iostream>
 
-star::star()
-{
+star::star() {
 }
 
-star::~star()
-{
+star::~star() {
 }
 
 //sets position of star
-void star::setPosition(int x, int y)
-{
+void star::setPosition(int x, int y) {
   this->xcoord = x;
   this->ycoord = y;
 }
 
-void star::draw(SDL_Renderer *renderer, SDL_Texture *texture)
-{
+void star::draw(SDL_Renderer *renderer, SDL_Texture *texture) {
   int w;
   int h;
   SDL_QueryTexture(texture, NULL, NULL, &w, &h);

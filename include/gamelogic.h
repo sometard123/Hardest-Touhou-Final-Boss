@@ -49,6 +49,7 @@ class gamelogic
 
     void clearBullet();
     void clearEnemyBullet();
+    void deleteBomb();
     //update
 
     void update();
@@ -88,6 +89,7 @@ class gamelogic
     Mix_Chunk *dead;
     Mix_Chunk *fire;
     Mix_Chunk *damage;
+    Mix_Chunk *bombsound;
     //renderer/window
 
     SDL_Renderer *renderer;

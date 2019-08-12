@@ -85,6 +85,7 @@ void gameloop::loop()
         game.clearBullet(); 
         game.clearEnemyBullet();
       }
+      game.deleteBomb();
     }
     else if (game.getGameOver()) //gamer wins
     {

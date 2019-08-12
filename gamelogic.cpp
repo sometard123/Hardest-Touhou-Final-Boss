@@ -9,6 +9,8 @@
 #include <enemybullet.h>
 #include <star.h>
 #include <junko.h>
+#include <bomb.h>
+#include <reimubomb.h>
 #include <healthbar.h>
 #include <texturemanager.h>
 #include <SDL2/SDL.h>
@@ -26,6 +28,7 @@ junko junko;
 enemybullet **enemybulletArray = NULL;
 bullet *bobj= NULL;
 star starObj;
+bomb *bomb = NULL;
 //vectors
 
 vector<star *> starVector;
@@ -72,7 +75,7 @@ void gamelogic::setGame(bool md)
   this->game = md;
 }
 
-//sets game over state
+//sets game over statSDL_Renderer *renderere
 void gamelogic::setGameOver(bool gmeOver)
 {
   this->gameOver = gmeOver;
@@ -185,6 +188,7 @@ void gamelogic::initWindow()
     dead = Mix_LoadWAV("sounds/se_pldead00.wav"); //loads dying sound 
     fire = Mix_LoadWAV("sounds/se_tan00.wav"); //loads firing sound
     damage = Mix_LoadWAV("sounds/se_lazer02.wav"); //loads damage sound
+    bombsound = Mix_LoadWAV("sounds/se_nep00.wav");
     reimuTexture = TextureManager::loadTex("Images/Th14ReimuBackSprite.png", renderer); //loads reimu sprite into texture
     playerTexture = TextureManager::loadTex("fonts/AldotheApache.ttf", "Player", renderer, &font); //loads player font into texture
     loadingTexture = TextureManager::loadTex("fonts/AldotheApache.ttf", "Loading...", renderer, &font); //loads the loading... font into texture
@@ -214,6 +218,10 @@ void gamelogic::render()
     SDL_RenderFillRect(renderer, &rightSide); //renders the right side of the screen
     SDL_Rect textRect = {480, 50, 40, 30}; //text rect for "player"
     SDL_RenderCopy(renderer, playerTexture, NULL, &textRect); //renders "player" to screen
+    if (bomb)
+    {
+      bomb->draw(renderer);
+    }
     if (reimu.getIsAlive()) //draws reimu only if she's alive
     {
       reimu.draw(renderer, reimuTexture);
@@ -223,7 +231,7 @@ void gamelogic::render()
     {
       starVector[i]->draw(renderer, starTexture);
     }
-
+    //draws bomb
     //draws bullets
     for (int i = 0; i < 4; i++)
     {
@@ -302,13 +310,24 @@ void gamelogic::processEvents()
         {
           case SDLK_ESCAPE: //when esc is pressed
             isRunning = false; //sdl window no longer running
+            break;
+          case SDLK_x:
+            //fires bomb when x is pressed
+            if (reimu.getIsAlive() && game)
+            {
+              if (!bomb)
+              {
+                bomb = new reimubomb(&reimu);
+                Mix_PlayChannel(2,bombsound, 0);
+              }
+            }
+            break;
+          case SDL_QUIT:
+            isRunning = false;
+            break;
+          default:
+            break;
         }
-        break;
-      case SDL_QUIT:
-        isRunning = false;
-        break;
-      default:
-        break;
     }
   }
   state = SDL_GetKeyboardState(NULL); //gets keyboard state
@@ -455,6 +474,10 @@ void gamelogic::update()
     //updates reimu's position
     reimu.update();
 
+    if (bomb)
+    {
+      bomb->updatePosition();
+    }
     //updates junko's position
     if (movement) //if junko is moving
     {
@@ -563,6 +586,16 @@ void gamelogic::clearEnemyBullet()
                 gameOver = true;
               }
             }
+            if (bomb)
+            {
+              if (collisionDetection(bomb->getX(), bomb->getY(), (*it2)[j]->getX(), (*it2)[j]->getY(), 150, 5))
+              {
+                cout << "test" << endl; //tests if collision detection works
+                counter++;
+                delete (*it2)[j];
+                (*it2)[j] = NULL;
+              }
+            }
           }
         }
       }
@@ -609,6 +642,18 @@ void gamelogic::clearEnemyBullet()
   }
 }
 
+void gamelogic::deleteBomb()
+{
+  if (bomb)
+  {
+    bomb->timer();
+    if (bomb->getTime() > 200)
+    {
+      delete bomb;
+      bomb = NULL;
+    }
+  }
+}
 //returns whether reimu's alive
 bool gamelogic::getReimuState()
 {
@@ -649,4 +694,5 @@ void gamelogic::quit()
   Mix_FreeChunk(dead);
   Mix_FreeChunk(fire);
   Mix_FreeChunk(damage);
+  Mix_FreeChunk(bombsound);
 }

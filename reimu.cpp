@@ -172,6 +172,7 @@ void reimu::update()
       y += velocity;
     }
   }
+  collisionDetection();
 }
 
 //collision detection with walls
@@ -202,7 +203,6 @@ void reimu::collisionDetection()
 
 void reimu::draw(SDL_Renderer *renderer, SDL_Texture *texture)
 {
-  collisionDetection();
   SDL_Rect reimuRect = {(int)x, (int)y, 64, 64};
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderCopy(renderer, texture, NULL, &reimuRect);

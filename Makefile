@@ -1,5 +1,5 @@
 CC = g++
-OBJ = main.o gameloop.o gamelogic.o reimu.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o 
+OBJ = main.o gameloop.o gamelogic.o reimu.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o bomb.o reimubomb.o
 INCLUDE = -Iinclude
 LINKERS = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_mixer -lSDL2_ttf 
 OFLAGS = -std=c++98 -Wall -Wshadow --pedantic -Wvla -Werror  -c -g
@@ -33,6 +33,10 @@ texturemanager.o: texturemanager.cpp include/texturemanager.h
 junko.o: junko.cpp include/junko.h
 	$(CC) junko.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
 healthbar.o: healthbar.cpp include/healthbar.h
-	$(CC) healthbar.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
+	$(CC) healthbar.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
+bomb.o: bomb.cpp include/bomb.h 
+	$(CC) bomb.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)  
+reimubomb.o: reimubomb.cpp include/reimu.h include/bomb.h include/reimubomb.h
+	$(CC) reimubomb.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
 clean:
 	rm -f $(OUTPUT) $(OBJ)

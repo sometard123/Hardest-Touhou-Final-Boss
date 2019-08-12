@@ -9,6 +9,7 @@ Kill Junko while dodging all bullets to win. Player starts with 3 lives.
 ## Controls
 
 * z - shoot
+* x - bomb (not finished)
 * arrow keys - move
 * lshift/rshift - toggles hitbox
 * lshift/rshift - toggles hitbox and slows movement

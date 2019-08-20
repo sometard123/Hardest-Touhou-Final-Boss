@@ -41,7 +41,6 @@ int bomb::getTime() {
 }
 
 void bomb::timer() {
-  cout << time << endl;
   time++;
 }
 

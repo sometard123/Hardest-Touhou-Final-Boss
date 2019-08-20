@@ -6,16 +6,16 @@ OFLAGS = -std=c++98 -Wall -Wshadow --pedantic -Wvla -Werror  -c -g
 CFLAGS =-std=c++98 -Wall -Wshadow --pedantic  -Wvla -Werror  -g -o
 OUTPUT = test
 
-test: game
-	./test
+$(OUTPUT): game
+	./$(OUTPUT)
 gdb: game
 	gdb $(OUTPUT) 
 debug: game
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./test 
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(OUTPUT)
 game: $(OBJ)
 	$(CC) $(OBJ) $(INCLUDE) $(LIB) $(LINKERS) $(CFLAGS) $(OUTPUT)
 main.o: main.cpp include/gameloop.h
-	$(CC) main.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
+	$(CC) main.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
 gameloop.o: gameloop.cpp  include/gameloop.h include/gamelogic.h
 	$(CC) gameloop.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
 gamelogic.o: gamelogic.cpp include/gamelogic.h include/bullet.h include/enemybullet.h include/star.h include/junko.h include/healthbar.h include/texturemanager.h

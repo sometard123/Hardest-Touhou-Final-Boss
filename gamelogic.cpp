@@ -19,7 +19,7 @@
 #include <cmath>
 #define WINX 640
 #define WINY 480
-#define SIZE 50
+#define SIZE 75
 using namespace std;
 
 gameloop loop;
@@ -480,7 +480,6 @@ void gamelogic::clearEnemyBullet() {
 
             //collision detection
             else if (collisionDetection(reimu.getHitboxX()+3, reimu.getHitboxY()+3, (*it2)[j]->getX()+5, (*it2)[j]->getY()+5,3, 5)) {
-              counter = 0; //counter set to 0 since rings are going to disappear
               Mix_PlayChannel(0, dead, 0); //plays dead sound in channel 0
               delete (*it2)[j];
               (*it2)[j] = NULL;
@@ -509,7 +508,7 @@ void gamelogic::clearEnemyBullet() {
     if (counter == numRings * SIZE) { //deletes all bullets
       for (it2 = enemybulletList.begin(); it2 != enemybulletList.end(); it2++) {
         if (*it2) {
-          delete *it2;
+          delete []*it2;
           *it2 = NULL;
         }
       }
@@ -520,9 +519,9 @@ void gamelogic::clearEnemyBullet() {
     }
     if (bomb){
       if (collisionDetection(bomb->getX(), bomb->getY(), junko.getX(), junko.getY(), 300, 300, 128, 64)){
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 15; i++) {
           if (healthVector.size()) {
-          updateHealthBar();
+            updateHealthBar();
           }
           else {
             game = false;
@@ -541,12 +540,13 @@ void gamelogic::clearEnemyBullet() {
             (*it2)[j] = NULL;
           }
         }
-        delete *it2;
+        delete []*it2;
         *it2 = NULL;
       }
     }
+    clear = true;
+    counter = SIZE * numRings;
     enemybulletList.clear(); //clears list
-    clear = true; //screen cleared
     reimu.setIsAlive(true); //reimu now alive
   }
 }

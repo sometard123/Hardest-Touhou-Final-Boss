@@ -58,7 +58,7 @@ void gameloop::loop() {
             game.initEnemyBullet(i);
             game.setTime(0);
             i++;
-            if (i == game.getRings()) {
+            if (i == game.getRings() || !game.getReimuState()) {
               i = 0;
               game.setJunkoMovement(true); //junko moves when all rings are fired
             }

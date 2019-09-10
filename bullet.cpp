@@ -3,7 +3,7 @@
 
 //constructor initializes bullet damage
 bullet::bullet() {
-  damage = 2.5;
+  damage = 3;
 }
 
 bullet::~bullet() {
@@ -23,11 +23,6 @@ double bullet::getX() {
 //returns the y coordinate of the bullet
 double bullet::getY() {
   return ycoord;
-}
-
-//makes bullet move up the screen with a velocity of 25
-void bullet::updatePosition() {
-  ycoord -= 25;
 }
 
 //draws bullet

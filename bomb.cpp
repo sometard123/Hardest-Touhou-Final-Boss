@@ -13,8 +13,8 @@ bomb::~bomb() {
 
 //sets bomb position
 void bomb::setPosition(double xcoord, double ycoord) {
-  x = xcoord;
-  y = ycoord;
+  bombx = xcoord;
+  bomby = ycoord;
 }
 
 //returns bomb damage area
@@ -23,11 +23,11 @@ double bomb::getDamageSize() {
 }
 
 double bomb::getX() {
-  return x;
+  return bombx;
 }
 
 double bomb::getY() {
-  return y;
+  return bomby;
 }
 
 //returns bombs damage

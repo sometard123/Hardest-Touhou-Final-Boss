@@ -5,6 +5,10 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 #include <reimu.h>
+#include <healthbar.h>
+#include <vector>
+#include <star.h>
+using namespace std;
 class gamelogic {
   public:
     //constructor/deconstructor
@@ -21,6 +25,8 @@ class gamelogic {
     void setRings(int rings);
     void setRunning(bool running);
     void setJunkoMovement(bool mvt);
+    void setClear(bool clr);
+    void setReimuState(bool alive);
     //getters
 
     bool getRunning();
@@ -29,13 +35,16 @@ class gamelogic {
     bool getLoading();
     bool getGame();
     bool getGameOver();
+    int getTime();
     int getRings();
+    vector<healthbar *>getHealthBar();
+    vector<star *>getStars();
     //init
 
     void initStars();
     void initHealthBar();
     void initWindow();
-    void initEnemyBullet(int i);
+    void initEnemyBullet(int i, gamelogic &gobj);
     //draw
 
     void render();
@@ -44,15 +53,19 @@ class gamelogic {
 
     int collisionDetection(double x1, double y1, double x2, double y2, double wt1, double ht1, double wt2, double ht2);
     int collisionDetection(double x1, double y1, double x2, double y2, double r1, double r2);
+    void handleCollisions(gamelogic &gobj);
+    void handleBullets();
+    void handleBomb();
+
     //clear
 
-    void clearBullet();
-    void clearEnemyBullet();
+    void clearEnemyBullet(gamelogic &gobj);
     void deleteBomb();
     //update
 
     void update();
     void updateHealthBar();
+    void updateStars();
     //quit
 
     void quit();
@@ -96,4 +109,6 @@ class gamelogic {
     //fonts
 
     TTF_Font *font;
+    vector<healthbar *> healthVector;
+    vector<star *>starVector;
 };

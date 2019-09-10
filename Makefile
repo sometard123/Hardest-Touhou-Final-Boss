@@ -1,17 +1,18 @@
 CC = g++
-OBJ = main.o gameloop.o gamelogic.o reimu.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o bomb.o reimubomb.o
+OBJ = main.o gameloop.o gamelogic.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o bomb.o reimu.o reimubomb.o reimubullet.o collisionDetection.o junkoBullet.o
 INCLUDE = -Iinclude
 LINKERS = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_mixer -lSDL2_ttf 
 OFLAGS = -std=c++98 -Wall -Wshadow --pedantic -Wvla -Werror  -c -g
 CFLAGS =-std=c++98 -Wall -Wshadow --pedantic  -Wvla -Werror  -g -o
 OUTPUT = test
+VAL = valgrind --tool=memcheck --log-file=memcheck.txt --leak-check=full --verbose
 
 $(OUTPUT): game
 	./$(OUTPUT)
 gdb: game
 	gdb $(OUTPUT) 
 debug: game
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(OUTPUT)
+	$(VAL) ./$(OUTPUT)
 game: $(OBJ)
 	$(CC) $(OBJ) $(INCLUDE) $(LIB) $(LINKERS) $(CFLAGS) $(OUTPUT)
 main.o: main.cpp include/gameloop.h
@@ -38,5 +39,11 @@ bomb.o: bomb.cpp include/bomb.h
 	$(CC) bomb.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)  
 reimubomb.o: reimubomb.cpp include/reimu.h include/bomb.h include/reimubomb.h
 	$(CC) reimubomb.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
+reimubullet.o: reimubullet.cpp include/reimu.h include/reimu.h include/bullet.h 
+	$(CC) reimubullet.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
+collisionDetection.o: collisionDetection.cpp include/reimu.h include/collisionDetection.h include/junko.h
+	$(CC) collisionDetection.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
+junkoBullet.o: junkoBullet.cpp include/bullet.h include/enemyBullet.h include/junko.h
+	$(CC) junkoBullet.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
 clean:
 	rm -f $(OUTPUT) $(OBJ)

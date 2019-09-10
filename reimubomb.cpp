@@ -1,41 +1,25 @@
-#include <reimubomb.h>
 #include <reimu.h>
 #include <iostream>
 using namespace std;
-reimu *robj = NULL;
 //initializes bomb size and damage in constructor
 
-reimubomb::reimubomb(reimu *r) {
+reimu::reimuBomb::reimuBomb(reimu *robj) {
+  current = robj;
   size = 300;
-  damage = 3;
-  robj = r;
+  damage = 10;
 }
 
-reimubomb::~reimubomb() {
-}
-
-
-void reimubomb::setOnScreen(bool onscrn) {
-  onScreen = onscrn;
-}
-
-//returns whether bomb is on screen
-bool reimubomb::getOnScreen() {
-  return onScreen;
+reimu::reimuBomb::~reimuBomb() {
 }
 
 //updates the position of the bomb
-void reimubomb::updatePosition() {
-  x = robj->getX() - 118;
-  y = robj->getY() - 118;
-  robj->update();
+void reimu::reimuBomb::updatePosition() {
+  bombx = current->x - 118;
+  bomby = current->y - 118;
 }
 
-void reimubomb::draw(SDL_Renderer *renderer) {
+void reimu::reimuBomb::draw(SDL_Renderer *renderer) {
   SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);
-  SDL_Rect bombRect = {(int)(x), (int)(y), size, size};
+  SDL_Rect bombRect = {(int)(bombx), (int)(bomby), size, size};
   SDL_RenderFillRect(renderer, &bombRect);
 }
-
-
-

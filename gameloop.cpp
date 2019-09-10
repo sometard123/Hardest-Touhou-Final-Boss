@@ -33,7 +33,7 @@ void gameloop::loop() {
   game.setLives(3); //player has 3 lives
   game.initStars();
   game.initHealthBar();
-  while (game.getRunning()) {//while game is running
+  while (game.getRunning()) {
     game.processEvents();
     if (game.getLoading()) {
       if (game.timer() > 100)  {//loading phase only lasts for a brief moment
@@ -44,32 +44,34 @@ void gameloop::loop() {
     }
     else if (game.getGame()) {
       if (!game.getReimuState())  {//if reimu's dead
-        if (game.timer() > 50)  {//pauses for duraction of 50
-          game.clearEnemyBullet();
-          game.clearBullet();
-          game.setTime(0); //timer resets for later use
-        }
+        //if (/*game.getTime() > 50*/)  {//pauses for duraction of 50
+        game.clearEnemyBullet(game);
+        game.setTime(0); //timer resets for later use
+        // }
       }
       else {
         static int i = 0; //ring counter
         if (game.getClear()) {
-          if (game.timer() > 10  && i < game.getRings()) {
+          if (game.timer() > 9  && i < game.getRings()) {
             game.setJunkoMovement(false); //junko doesn't move when bullets are firing
-            game.initEnemyBullet(i);
+            game.initEnemyBullet(i, game);
             game.setTime(0);
             i++;
-            if (i == game.getRings() || !game.getReimuState()) {
+            if (i == game.getRings()) {
               i = 0;
               game.setJunkoMovement(true); //junko moves when all rings are fired
+              game.setClear(false);
             }
           }
         } 
+        game.handleBullets();
+        game.handleCollisions(game);
+        game.handleBomb();
         game.update(); //updates position of everything
         //clears bullets if necessary
-        game.clearBullet(); 
-        game.clearEnemyBullet();
+        game.clearEnemyBullet(game);
       }
-      game.deleteBomb();
+      //      game.deleteBomb();
     }
     else if (game.getGameOver()) {//gamer loses
       if (game.timer() > 100) {

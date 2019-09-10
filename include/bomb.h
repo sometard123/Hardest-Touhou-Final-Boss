@@ -1,5 +1,5 @@
 #pragma once
-#include <gamelogic.h>
+#include <SDL2/SDL.h>
 class bomb {
   public:
     bomb();
@@ -14,8 +14,8 @@ class bomb {
     virtual void updatePosition()=0; //each bomb has their position updated differently
     virtual void draw(SDL_Renderer *renderer)=0; //bombs might be drawn differently
   protected:
-    double x;
-    double y;
+    double bombx;
+    double bomby;
     int size;
     double damage;
     int time;

@@ -5,9 +5,10 @@ class bullet {
     //constructor/deconstructor
 
     bullet();
-    ~bullet();
+    virtual ~bullet();
     //setters
 
+    void setDamage(double dmg);
     void setPosition(double x, double y);
     //getters
 
@@ -16,9 +17,9 @@ class bullet {
     double getDamage();
     //misc
 
-    void updatePosition();
-    void draw(SDL_Renderer *renderer);
-  private:
+    virtual void updatePosition() = 0;
+    virtual void draw(SDL_Renderer *renderer);
+  protected:
     double xcoord;
     double ycoord;
     double damage;

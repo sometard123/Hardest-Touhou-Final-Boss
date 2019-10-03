@@ -1,6 +1,7 @@
 #include <reimu.h>
 #include <junko.h>
-#include <gamelogic.h>
+#include <non1logic.h>
+#include <SDL_stuff.h>
 class collisionDetection {
   public:
     collisionDetection();
@@ -11,5 +12,6 @@ class collisionDetection {
     void reimuWithJunkoBullets(reimu &reimuObject, junko &junkoObject, gamelogic &gobj, Mix_Chunk *dead);
     void reimuBombWithJunkoBullets(reimu &reimuObject, junko &junkoObject, gamelogic &gobj);
     void reimuBombWithJunko(reimu &reimuObject, junko &junkoObject, gamelogic &gobj);
+    void reimuWithJunko(reimu &reimuObject, junko &junkoObject, gamelogic &gobj, Mix_Chunk *dead);
   private:
 };

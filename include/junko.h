@@ -1,10 +1,8 @@
 #pragma once
-#include <gamelogic.h>
+#include <non1logic.h>
 #include <enemybullet.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
 #include <list>
+#include <SDL_stuff.h>
 class junko {
   public:
     //constructor/deconstructor
@@ -39,6 +37,7 @@ class junko {
   private:
     int x;
     int y;
+    double deltax;
     int health;
     int numRings;
     int counter;

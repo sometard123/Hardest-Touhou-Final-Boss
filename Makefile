@@ -1,13 +1,13 @@
 CC = g++
-OBJ = main.o gameloop.o gamelogic.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o bomb.o reimu.o reimubomb.o reimubullet.o collisionDetection.o junkoBullet.o
+OBJ = main.o non1loop.o non1logic.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o bomb.o reimu.o reimubomb.o reimubullet.o collisionDetection.o junkoBullet.o attacks.o
 INCLUDE = -Iinclude
 LINKERS = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_mixer -lSDL2_ttf 
-OFLAGS = -std=c++98 -Wall -Wshadow --pedantic -Wvla -Werror  -c -g
-CFLAGS =-std=c++98 -Wall -Wshadow --pedantic  -Wvla -Werror  -g -o
-OUTPUT = test
-VAL = valgrind --tool=memcheck --log-file=memcheck.txt --leak-check=full --verbose
+OFLAGS = -std=c++98 -Wall -Wshadow --pedantic -Wvla -Werror  -c -g 2> gccmessages
+CFLAGS =-std=c++98 -Wall -Wshadow --pedantic  -Wvla -Werror  -g -o 2> gccmessages
+OUTPUT = Game
+VAL = valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --log-file=memcheck.txt
 
-$(OUTPUT): game
+run: game
 	./$(OUTPUT)
 gdb: game
 	gdb $(OUTPUT) 
@@ -15,12 +15,14 @@ debug: game
 	$(VAL) ./$(OUTPUT)
 game: $(OBJ)
 	$(CC) $(OBJ) $(INCLUDE) $(LIB) $(LINKERS) $(CFLAGS) $(OUTPUT)
-main.o: main.cpp include/gameloop.h
+attacks.o: attacks.cpp include/attacks.h include/non1loop.h
+	$(CC) attacks.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
+main.o: main.cpp include/attacks.h
 	$(CC) main.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
-gameloop.o: gameloop.cpp  include/gameloop.h include/gamelogic.h
-	$(CC) gameloop.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
-gamelogic.o: gamelogic.cpp include/gamelogic.h include/bullet.h include/enemybullet.h include/star.h include/junko.h include/healthbar.h include/texturemanager.h
-	$(CC) gamelogic.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
+non1loop.o: non1loop.cpp  include/non1loop.h include/non1logic.h
+	$(CC) non1loop.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
+non1logic.o: non1logic.cpp include/non1logic.h include/bullet.h include/enemybullet.h include/star.h include/junko.h include/healthbar.h include/texturemanager.h
+	$(CC) non1logic.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
 reimu.o: reimu.cpp include/reimu.h
 	$(CC) reimu.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS)
 bullet.o: bullet.cpp include/bullet.h
@@ -46,4 +48,4 @@ collisionDetection.o: collisionDetection.cpp include/reimu.h include/collisionDe
 junkoBullet.o: junkoBullet.cpp include/bullet.h include/enemyBullet.h include/junko.h
 	$(CC) junkoBullet.cpp $(INCLUDE) $(LIB) $(LINKERS) $(OFLAGS) 
 clean:
-	rm -f $(OUTPUT) $(OBJ)
+	rm -f $(OUTPUT) $(OBJ) *~

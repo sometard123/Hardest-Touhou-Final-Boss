@@ -1,7 +1,7 @@
 #include <collisionDetection.h>
 #include <cmath>
 #include <stdbool.h>
-#define SIZE 25
+#define SIZE 90
 collisionDetection::collisionDetection() {
 }
 
@@ -50,7 +50,8 @@ void collisionDetection::reimuWithJunkoBullets(reimu &reimuObject, junko &junkoO
             (*junkoObject.it)[i] = NULL;
             junkoObject.setCounter(junkoObject.getCounter() + 1);
             reimuObject.setIsAlive(false);
-            if (gobj.getStars().size()) {
+            reimuObject.setPosition(320, 240);
+            if (attacks::starVector.size()) {
               gobj.updateStars();
             }
             else {
@@ -68,7 +69,7 @@ void collisionDetection::reimuBombWithJunkoBullets(reimu &reimuObject, junko &ju
     if (*junkoObject.it) {
       for (int i = 0; i < SIZE; i++) {
         if ((*junkoObject.it)[i] && reimuObject.getBomb()) {
-          if (collisionDetection2d(reimuObject.getBomb()->getX()+150, reimuObject.getBomb()->getY()+150, (*junkoObject.it)[i]->getX() + 5, (*junkoObject.it)[i]->getY() + 5, 150, (*junkoObject.it)[i]->getSize())){
+          if (collisionDetection2d(reimuObject.getBomb()->getX()+150, reimuObject.getBomb()->getY()+150, (*junkoObject.it)[i]->getX() + 5, (*junkoObject.it)[i]->getY() + 5, 150, (*junkoObject.it)[i]->getSize() / 2)){
             delete (*junkoObject.it)[i];
             (*junkoObject.it)[i] = NULL;
             junkoObject.setCounter(junkoObject.getCounter()+ 1);
@@ -81,12 +82,28 @@ void collisionDetection::reimuBombWithJunkoBullets(reimu &reimuObject, junko &ju
 
 void collisionDetection::reimuBombWithJunko(reimu &reimuObject, junko &junkoObject, gamelogic &gobj) {
   if (reimuObject.getBomb()){
-  if (collisionDetection2d(reimuObject.getBomb()->getX(), reimuObject.getBomb()->getY(), junkoObject.getX(), junkoObject.getY(), 300, 300, 128, 64)) {
-    for (int i = 0; i < reimuObject.getBomb()->getDamage(); i++) {
-      if (gobj.getHealthBar().size()) {
-        gobj.updateHealthBar();
+    if (collisionDetection2d(reimuObject.getBomb()->getX(), reimuObject.getBomb()->getY(), junkoObject.getX(), junkoObject.getY(), 300, 300, 128, 64)) {
+      for (int i = 0; i < reimuObject.getBomb()->getDamage(); i++) {
+        if (gobj.getHealthBar().size()) {
+          gobj.updateHealthBar();
+        }
       }
     }
   }
+}
+
+void collisionDetection::reimuWithJunko(reimu &reimuObject, junko &junkoObject, gamelogic &gobj, Mix_Chunk *dead) {
+  if (collisionDetection2d(reimuObject.getHitboxX(), reimuObject.getHitboxY(), junkoObject.getX(), junkoObject.getY(),6, 6, 128, 64)) {
+    reimuObject.setIsAlive(false);
+    reimuObject.setPosition(320, 240);
+    Mix_PlayChannel(0, dead, 0); //plays dead sound in channel 0
+    if (attacks::starVector.size()) {
+      gobj.updateStars();
+    }
+    else {
+      gobj.setGame(false);
+      gobj.setGameOver(true);
+    }
   }
 }
+

@@ -1,11 +1,11 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
 #include <stdbool.h>
 #include <list>
+#include <vector>
 #include <bullet.h>
 #include <bomb.h>
+#include <star.h>
+#include <SDL_stuff.h>
 using namespace std;
 class reimu {
   public:
@@ -16,7 +16,7 @@ class reimu {
     //init
 
     void initBullets(Mix_Chunk *damage);
-    void initBomb();
+    void initBomb(vector  <star*> *bombVector);
     void destroyBomb();
     //clear
 
@@ -24,6 +24,7 @@ class reimu {
     //setters
 
     void setIsAlive(bool alive);
+    void setPosition(double xcoord, double ycoord);
     //getters
 
     bool getIsAlive();
@@ -39,6 +40,8 @@ class reimu {
     friend class collisionDetection;
     class reimuBullet: public bullet {
       public: 
+        reimuBullet();
+        reimuBullet(double deltax, double deltay);
         ~reimuBullet();
         virtual void updatePosition();
         virtual void draw(SDL_Renderer *renderer);

@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL2/SDL.h>
+#include <SDL_stuff.h>
 class star {
   public:
     //constructor/deconstructor

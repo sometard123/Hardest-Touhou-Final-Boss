@@ -1,11 +1,19 @@
 #include <reimu.h>
 #include <bullet.h>
+reimu::reimuBullet::reimuBullet() {
+}
+
+reimu::reimuBullet::reimuBullet(double deltax, double deltay) {
+  dx = deltax;
+  dy = deltay;
+}
 
 reimu::reimuBullet::~reimuBullet() {
 }
 
 void reimu::reimuBullet::updatePosition() {
-  ycoord -= 25;
+  ycoord -= dy;
+  xcoord += dx;
 }
 
 void reimu::reimuBullet::draw(SDL_Renderer *renderer) {

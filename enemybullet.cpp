@@ -1,5 +1,5 @@
-#include <enemybullet.h>
 #include <SDL2/SDL.h>
+#include <enemybullet.h>
 #define WINX 480
 #define WINY 640
 

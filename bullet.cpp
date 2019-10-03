@@ -1,9 +1,7 @@
-#include <SDL2/SDL.h>
 #include <bullet.h>
 
 //constructor initializes bullet damage
 bullet::bullet() {
-  damage = 3;
 }
 
 bullet::~bullet() {

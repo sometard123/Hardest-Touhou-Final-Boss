@@ -1,0 +1,3 @@
+non1logic.cpp:39:21: error: expected constructor, destructor, or type conversion before ‘(’ token
+ gamelogic::gamelogic(reimu ro) {
+                     ^

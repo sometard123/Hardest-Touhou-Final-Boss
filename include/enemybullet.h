@@ -1,6 +1,6 @@
 #pragma once
-#include <SDL2/SDL.h>
 #include <bullet.h>
+#include <SDL_stuff.h>
 class enemybullet: public bullet {
   public:
     //constructor/deconstructor

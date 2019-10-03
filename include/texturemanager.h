@@ -1,6 +1,6 @@
 #pragma once
-#include <gameloop.h>
-#include <SDL2/SDL_ttf.h>
+#include <non1loop.h>
+#include <SDL_stuff.h>
 class TextureManager {
   public:
     //load textures

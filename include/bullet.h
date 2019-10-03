@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL2/SDL.h>
+#include <SDL_stuff.h>
 class bullet {
   public:
     //constructor/deconstructor
@@ -23,4 +23,6 @@ class bullet {
     double xcoord;
     double ycoord;
     double damage;
+    double dx;
+    double dy;
 };

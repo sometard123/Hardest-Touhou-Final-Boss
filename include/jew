@@ -1,0 +1,11 @@
+#include <iostream>
+using namespace std;
+int andreyscode() {
+  cout << "dude im jewish";
+  return 69;
+}
+
+int main() {
+  cout << andreysCode(); << endl;
+}
+

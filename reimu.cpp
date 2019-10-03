@@ -1,5 +1,3 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <cstdlib>
 #include <iostream>
 #include <reimu.h>
@@ -25,28 +23,42 @@ reimu::~reimu() {
   }
 }
 
-void reimu::initBomb() {
+void reimu::initBomb(vector <star *> *bombVector) {
   if (isAlive && !bobj) {
     bobj = new reimuBomb(this);
+    delete bombVector->back();
+    bombVector->pop_back();
   }
 }
 
 void reimu::destroyBomb() {
   if (bobj) {
     bobj->timer();
-    if (bobj->getTime()> 150) {
+    if (bobj->getTime()> 150 || !isAlive) {
       delete bobj;
       bobj = NULL;
     }
   }
 }
+
 void reimu::initBullets(Mix_Chunk *damage) {
   state = SDL_GetKeyboardState(NULL); //gets keyboard state
   if (state[SDL_SCANCODE_Z] && isAlive) {
     Mix_Volume(0, 50); //volume in channel 0 set to 50 
     Mix_PlayChannel(0, damage, 0); //damage sound played once in channel 0
     for (int i = 0; i < 4; i++) {
-      bulletObject = new reimuBullet(); //allocates enough memory for bobj
+      if (!i){
+        bulletObject = new reimuBullet(-10, 25);
+      }
+      else if (i == 3) {
+        bulletObject = new reimuBullet(10, 25);
+      }
+      else {
+        bulletObject = new reimuBullet(0, 25);
+      }
+      if (state[SDL_SCANCODE_LSHIFT] || state[SDL_SCANCODE_RSHIFT]) {
+        bulletObject = new reimuBullet(0, 25);
+      }
       bulletList[i].push_back(bulletObject); //pushes bobj into list
       switch (i) {//left most bullet set to reimu's position, rest are set to the right of it
         case 0:
@@ -68,17 +80,19 @@ void reimu::initBullets(Mix_Chunk *damage) {
 }
 
 void reimu::clearBullet() {
-  for (int i = 0; i < 4; i++) {
-    if (bulletList[i].size()) {//checks if the array of bullet lists at index i is exists
-      if (bulletList[i].front()) {//checks if front exists
-        if (bulletList[i].front()->getY() <= 0) {//deletes bullet that exits top of screen
-          delete bulletList[i].front();
-          bulletList[i].pop_front(); 
+  if (isAlive){ 
+    for (int i = 0; i < 4; i++) {
+      for (it = bulletList[i].begin(); it != bulletList[i].end(); it++) {
+        if (*it) {
+          if ((*it)->getY() < 0 || (*it)->getX() < 0 || (*it)->getX() > 450) {
+          delete *it; 
+         *it = NULL;
+          }
         }
       }
     }
   }
-  if (!isAlive) {
+  else {
     for (int i = 0; i < 4; i++) {
       for (it = bulletList[i].begin(); it != bulletList[i].end(); it++) {
         if (*it) {
@@ -91,15 +105,21 @@ void reimu::clearBullet() {
   }
 }
 
-
 //sets reimu's alive status
 void reimu::setIsAlive(bool alive) {
-  reimu::isAlive = alive;
+  isAlive = alive;
+}
+
+void reimu::setPosition(double xcoord, double ycoord) {
+  x = xcoord;
+  y = ycoord;
+  h.x = x + 29;
+  h.y = y + 29;
 }
 
 //returns whether reimu is alive or dead
 bool reimu::getIsAlive() {
-  return reimu::isAlive;
+  return isAlive;
 }
 
 //returns reimu and reimu's hitboxes position

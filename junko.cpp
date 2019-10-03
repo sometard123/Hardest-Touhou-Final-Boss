@@ -1,6 +1,7 @@
 #include <junko.h>
 #include <iostream>
-#define SIZE 25
+#include <vector>
+#define SIZE 90
 #define WINY 480
 using namespace std;
 
@@ -9,7 +10,6 @@ junko::junko() {
   x = 330;
   y = 100;
   health = 2870;
-  numRings = 1000;
   bulletArray = NULL;
   time = 0;
 }
@@ -42,7 +42,8 @@ int junko::getY() {
 
 //updates x position with given velocity
 void junko::updateX(double dx) {
-  x += dx;
+  deltax=dx;
+  x+=deltax;
 }
 
 void junko::updateBullets() {
@@ -59,16 +60,12 @@ void junko::updateBullets() {
 void junko::initBullets(gamelogic &gobj, int i, Mix_Chunk *fire) {
   double dx;
   double dy;
-  it = bulletList.begin();
-  it2 = it;
-  advance(it, i);
-  advance(it2, numRings - 1);
   Mix_PlayChannel(-1, fire, 0);
   int random = (rand() % 360) * M_PI/180;
   bulletArray = new junko::junkoBullet*[SIZE];
   for (int j = 0; j < SIZE; j++) {
-    dx = cos((j * 2 * M_PI + random) / (SIZE));
-    dy = sin((j * 2 * M_PI - random) / (SIZE));
+    dx = cos((j * 2 * M_PI + random)/ (SIZE));
+    dy = sin((j * 2 * M_PI - random)/ (SIZE));
     bulletArray[j] = new junko::junkoBullet(x, y, dx, dy); //enemy bullet position set and direction is set
   }
   bulletList.push_back(bulletArray);
@@ -109,7 +106,6 @@ void junko::clearBullets(gamelogic &gobj) {
         }
       }
       if (counter == gobj.getRings() * SIZE) { //deletes all bullets
-        cout << "garbage" << endl;
         for (it = bulletList.begin(); it != bulletList.end(); it++) {
           if (*it) {
             delete []*it;
@@ -124,18 +120,26 @@ void junko::clearBullets(gamelogic &gobj) {
     }
   }
   else {
-    for (it = bulletList.begin(); it != bulletList.end(); it++) {
-      if (*it) {
-        for (int j = 0; j < SIZE; j++) {
-          if ((*it)[j]) {
-            counter++;
-            delete (*it)[j];
-            (*it)[j] = NULL;
+    if (!deltax) {
+      for (it = bulletList.begin(); it != bulletList.end(); it++) {
+        if (*it) {
+          for (int j = 0; j < SIZE; j++) {
+            if ((*it)[j]) {
+              delete (*it)[j];
+              counter++;
+              (*it)[j] = NULL;
+            }
           }
+          delete []*it;
+          *it = NULL;
         }
-        delete []*it;
-        *it = NULL;
       }
+    }
+    else {
+      counter= 0;
+    }
+    if (!attacks::bombVector.size()) {
+      attacks::initBombStars();
     }
     gobj.setClear(true);
     bulletList.clear(); //clears list

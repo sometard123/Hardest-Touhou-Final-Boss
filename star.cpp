@@ -1,6 +1,6 @@
 #include <star.h>
 #include <iostream>
-
+using namespace std;
 star::star() {
 }
 

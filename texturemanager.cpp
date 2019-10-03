@@ -24,6 +24,7 @@ SDL_Texture *TextureManager::loadTex(const char* file, const char* text, SDL_Ren
   SDL_Surface *tmp = TTF_RenderText_Blended(*font, text, color);  //creates a surface from font
   SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, tmp); 
   SDL_FreeSurface(tmp);
+  TTF_CloseFont(*font);
   return texture;
 }
 

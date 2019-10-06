@@ -39,7 +39,7 @@ void attacks::sequence() {
   setLives(3);
   attacks::initBombStars();
   attacks::initStars();
-  non1loop non1(ro);
+  non1loop non1;
   non1.loop();
 }
 

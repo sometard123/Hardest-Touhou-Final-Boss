@@ -4,9 +4,9 @@
 using namespace std;
 non1loop::non1loop() {
 }
-non1loop::non1loop(reimu ro) {
-  object = ro;
-}
+/*non1loop::non1loop(ro) {
+ // object = ro;
+}*/
 
 non1loop::~non1loop() {
 }

@@ -6,7 +6,7 @@ class non1loop {
     //constructor/deconstructor
     
     non1loop();
-    non1loop(reimu);
+    //non1loop(reimu);
     ~non1loop();
     //setters
 

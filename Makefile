@@ -1,5 +1,5 @@
 CC = g++
-OBJ = main.o non1loop.o non1logic.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o bomb.o reimu.o reimubomb.o reimubullet.o collisionDetection.o junkoBullet.o attacks.o
+OBJ = main.o attacks.o non1loop.o non1logic.o bullet.o enemybullet.o star.o texturemanager.o junko.o healthbar.o bomb.o reimu.o reimubomb.o reimubullet.o collisionDetection.o junkoBullet.o 
 INCLUDE = -Iinclude
 LINKERS = -lSDL2 -lSDL2main -lSDL2_image -lSDL2_mixer -lSDL2_ttf 
 OFLAGS = -std=c++98 -Wall -Wshadow --pedantic -Wvla -Werror  -c -g 2> gccmessages

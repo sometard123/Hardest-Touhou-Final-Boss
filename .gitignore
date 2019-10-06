@@ -2,3 +2,4 @@
 test
 error*
 memcheck.txt
+*.sh

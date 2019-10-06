@@ -33,10 +33,8 @@ list <enemybullet **>::iterator it2;
 list <enemybullet **>::iterator it3;
 
 //constructor initializing private variables
-gamelogic::gamelogic() {
-}
 
-gamelogic::gamelogic(reimu ro) {
+gamelogic::gamelogic(/*reimu ro*/) {
   time = 0; //indicates that game is beginning
   loading = true; //game starts in the loading stage
   game = false; //play mode is false until game finishes loading
@@ -47,7 +45,7 @@ gamelogic::gamelogic(reimu ro) {
   numRings = 5; //number of rings the junko shoots is initialized to 5
 //  window = NULL;
  // renderer = NULL;
-  reimu = ro;
+//  reimu = ro;
 }
 gamelogic::~gamelogic() {
 }
